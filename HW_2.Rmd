@@ -1,0 +1,121 @@
+---
+title: "BF HW 2"
+author: "Sahil Landge"
+date: "9/19/2022"
+output: html_document
+---
+
+```{r}
+library(readxl)
+Typical_Employee_Survey_Data <- read_excel("Typical_Employee_Survey_Data.xlsx")
+
+```
+```{r}
+myDataFrame <- Typical_Employee_Survey_Data
+myDataFrame
+
+names(myDataFrame)
+
+ncol(myDataFrame)
+
+nrow(myDataFrame)
+
+nrow(myDataFrame)
+
+dim(myDataFrame)
+
+head(myDataFrame)
+
+tail(myDataFrame)
+
+str(myDataFrame)
+
+class(myDataFrame$Gender)
+
+myDataFrame$Gender <- as.factor(myDataFrame$Gender)
+
+class(myDataFrame$Gender)
+
+str(myDataFrame)
+
+myDataFrame$`Years Working`
+
+myDataFrame[5]
+
+myDataFrame[c("Years Working")]
+
+myDataFrame[6:3]
+
+myDataFrame[c("Age","Gender")]
+
+myDataFrame[2,]
+
+myDataFrame[2:3,c("Age")]
+
+myDataFrame[2:3,2:3]
+
+myDataFrame$Gender
+
+table(myDataFrame$Gender)
+
+table(myDataFrame$Age)
+
+table(myDataFrame$Age, myDataFrame$Gender)
+
+myDataFrame[myDataFrame$Gender == "1",]
+
+myDataFrame[myDataFrame$Gender == "2",]
+
+myDataFrame[order(myDataFrame$Age),]
+
+myDataFrame[order(-myDataFrame$Age),]
+
+names(myDataFrame)[2] <- "Gender"
+head(myDataFrame)
+
+names(myDataFrame)[2] <- "Satisfied"
+head(myDataFrame)
+
+names(myDataFrame)[2] <- "Gender"
+head(myDataFrame)
+
+barplot(myDataFrame$`Promotion Chances`)
+barplot(myDataFrame$`Promotion Chances`, main = "Promotion Chances VS Gender", xlab = "Gender", ylab = "Promotion Chances", col = "Blue", names.arg = myDataFrame$`Promotion Chances`)
+
+pie(myDataFrame$`Years Working`)
+pie(myDataFrame$`Years Working`,label = myDataFrame$`Gender`, main = "Years Working VS Gender")
+
+stem(myDataFrame$Proud)
+stem(myDataFrame$`Budgetary Decision`)
+
+hist(myDataFrame$`Years Working`)
+
+boxplot(myDataFrame$`Promotion Chances`)
+boxplot(myDataFrame$`Gender`,myDataFrame$`Promotion Chances`)
+
+min(myDataFrame$`Promotion Chances`)
+max(myDataFrame$`Promotion Chances`)
+range(myDataFrame$'Promotion Chances')
+StatRange = max(myDataFrame$`Promotion Chances`) - min(myDataFrame$'Promotion Chances')
+StatRange
+mean(myDataFrame$Age)
+sd(myDataFrame$Age)
+var(myDataFrame$Age)
+sqrt(var(myDataFrame$Age))
+fivenum(myDataFrame$Age)
+IQR(myDataFrame$Age)
+quantile(myDataFrame$Age)
+summary(myDataFrame$Age)
+boxplot.stats(myDataFrame$Age)
+boxplot.stats(myDataFrame$Age)$out
+
+
+summary(myDataFrame)
+
+by(myDataFrame$Age,myDataFrame$Gender,mean)
+by(myDataFrame$Age,myDataFrame$Gender,sd)
+by(myDataFrame$Age,myDataFrame$Gender,summary)
+
+aggregate(myDataFrame$Age,list("Type" = myDataFrame$Gender),median)
+aggregate(myDataFrame$Age,list("Type" = myDataFrame$Gender),summary)
+```
