@@ -1,0 +1,52 @@
+---
+title: "BF Assignment 3"
+author: "Sahil Landge"
+date: "2022-09-27"
+output: html_document
+---
+
+```{r}
+library(fpp)
+library(fpp2)
+
+# The time series data set that I have chosen is qgas which was under the fpp2 library package.Quarterly time series of class ts. The time series qgas from fpp2 package shows the time series values of Quarterly Australian Gas Production. Total quarterly gas production in Australia (in petajoules) from 1956:Q1 to 2010:Q2. 
+
+
+# The plot shows a upwards trending graph in which trend the trend increases with time. As per the observations from the plot. I believe the ACF Plot will have all statistically significant values, the correlation values after each lag will gradually come down.
+
+plot(qgas, main = "Quarterly Australian Gas Production", xlab = "Time", ylab = "Gas Production")
+
+
+#The ACF plot shows all the correlation values above major portion of the confidence level which shows that the historic data has significant impact on the preceding data.
+
+Acf(qgas, main = "ACF Plot - Gas Production")
+
+
+gas <- HoltWinters(qgas)
+attributes(gas) 
+
+# It can be observed that the Holt Winters fit is deviating at some points from the original plot which indicates that the Holt Winters forecasting might be wrong at some level as the red line is deviated from the original black point in the plot.
+
+plot(gas)
+
+
+gas_f <- forecast(gas)
+
+attributes(gas_f)
+
+# The residuals seem to have an increasing trend with time
+
+plot(gas_f$residuals)
+
+# The histogram plot should be normally distributed with a mean of 0 to be good forecast but in our data set these conditions are not satisfied.
+
+hist(gas_f$residuals)
+
+# The ACF Plot shows that there is a statistical significant difference which implies the plot is predictable.
+
+Acf(gas_f$residuals)
+
+# The RMSE should be the less for the forecast to be good which happens to be in our case.
+
+accuracy(gas_f)
+```
