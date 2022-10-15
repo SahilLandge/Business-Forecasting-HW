@@ -1,0 +1,43 @@
+---
+title: "HW_5"
+author: "Sahil Landge"
+date: "2022-10-15"
+output: html_document
+---
+
+```{r}
+library(fpp)
+library(fpp2)
+#Printing head of the data to understand the layout
+head(qgas)
+
+#Plotting the dataset
+plot(qgas)
+
+#Separating seasonal, trend and remainder component from the time series. As seen, seasonal component is additive since magnitude of this component is fairly constant.
+stl_decomp <- stl(qgas,s.window ="periodic")
+plot(stl_decomp)
+attributes(stl_decomp)
+
+#Printing a seasonal adjustment. These values shows how the data would look if we adjust the seasonal component.
+seasadj(stl_decomp)
+
+# Plotting a line on the graph. We can see plot for seasonally adjusted data vs original data.
+plot(qgas)
+lines(seasadj(stl_decomp), col="Blue")
+
+# Default period forecast. Forecasting with seasonally adjusted data.
+f_stl <- forecast(stl_decomp)
+
+# you can pass the # of period. Next 15 data points are forecasted and plotted
+f_stl <- forecast(stl_decomp,h=15)
+f_stl
+plot(f_stl)
+
+# The decomp function first determines the trend component using a moving average 
+decomp_gas <- decompose(qgas)
+
+# Each one shows different attributes 
+attributes(decomp_gas)
+seasadj(decomp_gas)
+```
