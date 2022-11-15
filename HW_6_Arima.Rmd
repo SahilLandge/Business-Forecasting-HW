@@ -1,0 +1,38 @@
+---
+title: "Arima Homework"
+author: "Sahil Landge"
+date: "2022-11-15"
+output: html_document
+---
+
+```{r}
+library(fpp)
+library(fpp2)
+library(forecast)
+timeseries <- ts(qgas)
+plot(timeseries)
+ndiffs(timeseries)
+tsdisplay(timeseries)
+timeseriesdiff1 <- diff(timeseries, differences=1)
+plot(timeseriesdiff1)
+tsdisplay(timeseriesdiff1)
+auto_fit <- auto.arima(timeseries, trace=TRUE, stepwise = FALSE)
+auto_fit
+#p=1 - Model is considering one previous time series values from ACF
+#q=0 - Model is considering no previous time series values from ACF of residuals
+#P=0 - Model is considering no previous time series values from PACF
+#Q=0 - Model is considering no previous time series values from PACF of residuals
+attributes(auto_fit)
+plot(forecast(auto_fit,h=5,level=c(99.5)))
+#Residual Analysis
+Acf(auto_fit$residuals)
+#Data shows white noice. Model works best.
+Box.test(residuals(auto_fit), lag=20, type="Ljung")
+#p>0.05. Model is a good model.
+plot.ts(residuals(auto_fit))
+hist(auto_fit$residuals)
+tsdiag(auto_fit)
+# All Acf values are within confidence interval. The model is a good forecast.
+# All p values are well above the confidence level.
+# Overall, the ARIMA model is a good forecast.
+```
